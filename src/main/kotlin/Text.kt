@@ -6,7 +6,7 @@ class Text(override val name: String) : Display(){
     }
     override fun hello(){}
 
-    override fun notIsInTheRange(userChoice : String) : Boolean{
+    override fun notIsInTheRange(userChoice : Int) : Boolean{
         return true
     }
 

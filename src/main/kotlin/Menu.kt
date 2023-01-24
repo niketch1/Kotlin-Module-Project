@@ -2,10 +2,6 @@ import java.util.Scanner
 
  class Menu {
 
-     var display: Display? = null
-     var display1: Display? = null
-     var display2: Display? = null
-
      companion object {
          val input = Scanner(System.`in`)
      }
@@ -13,44 +9,39 @@ import java.util.Scanner
      fun start() {
          val archiveList = SelectArchive("Первый")
          archiveList.create()
+         watchDisplay(archiveList)
+     }
+
+     private fun watchDisplay(display: Display?) {
          while (true) {
-             display = selectItem(archiveList)
-             if (display == null) continue
+             val display1 = selectItem(display!!)
+             if (display1 == null) continue
              else {
-                 if (display!!.name.equals("Выход")) break
+                 if (exit(display1)) break
                  else {
-                     while (true) {
-                         display1 = selectItem(display!!)
-                         if (display1 == null) continue
-                         else {
-                             if (display1!!.name.equals("Выход")) break
-                             else {
-                                 while (true) {
-                                     display2 = selectItem(display1!!)
-                                     if (display2 == null) continue
-                                     else {
-                                         if (display2!!.name.equals("Выход")) break
-                                     }
-                                 }
-                             }
-                         }
-                     }
+                     watchDisplay(display1)
                  }
              }
          }
      }
 
+     private fun exit(display: Display?): Boolean {
+         if (display!!.name.equals("Выход")) return true
+         return false
+     }
+
 
      fun selectItem(display: Display): Display? {
          display.hello()
-         val userChoice = input.nextLine()
-         if (!userChoice[0].isDigit()) {
+         if (!input.hasNextInt()) {
+             input.nextLine()
              println("Следует ввести цифру")
          } else {
+             val userChoice = input.nextInt()
              if (display.notIsInTheRange(userChoice)) {
                  println("Такой цифры нет")
                  println("Введите корректный символ")
-             } else return display.execute(userChoice.toInt())
+             } else return display.execute(userChoice)
          }
          return null
      }

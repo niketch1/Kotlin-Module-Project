@@ -1,4 +1,4 @@
-import java.util.*
+import java.util.Scanner
 
 class Archive(override val name: String ) : Display() {
 
@@ -34,8 +34,8 @@ class Archive(override val name: String ) : Display() {
         archive.forEachIndexed { index, element -> println("$index. ${element.name}") }
     }
 
-    override fun notIsInTheRange(userChoice : String) : Boolean{
-        return userChoice.toInt() !in 0..archive.lastIndex
+    override fun notIsInTheRange(userChoice : Int) : Boolean{
+        return userChoice !in 0..archive.lastIndex
     }
 }
 
